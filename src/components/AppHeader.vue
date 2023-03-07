@@ -1,8 +1,9 @@
 <script>
+import {store} from '../store'
 export default{
     data(){
         return{
-
+            store
         }
     }
 }
@@ -10,7 +11,7 @@ export default{
 
 <template>
     <header>
-        <input class="search-bar" type="text" >
+        <input class="search-bar" type="text" v-model="store.searchMovie">
     </header>
 </template>
 

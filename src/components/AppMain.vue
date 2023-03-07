@@ -14,16 +14,24 @@ export default{
     },
 
     computed:{
-        movies(){
-            return this.store.movieCards
+        movie(){
+            return this.store.searchMovie
+        }
+    },
+
+    watch:{
+        movie(newValue, oldValue){
+            console.log(oldValue, newValue)
+            this.fetchCards()
         }
     },
 
     methods:{
         fetchCards(){
+            const searchValue = this.movie
             axios.get('https://api.themoviedb.org/3/search/movie?api_key=3df3427edaf72e4e9aac84491c75f583', {
                 params:{
-                    
+                    query: searchValue
                 }
             })
             .then((res) => {
@@ -42,7 +50,7 @@ export default{
 <template>
     <main>
         <div class="container">
-            <ul>
+            <ul class="list-card">
                 <Cards v-for="movie in store.movieCards" :card="movie"/>
             </ul>
         </div>
@@ -51,6 +59,9 @@ export default{
 
 <style lang="scss" scoped>
 @use '../style/partials/variables.scss';
-
-
+.list-card{
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+}
 </style>
