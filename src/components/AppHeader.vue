@@ -3,7 +3,14 @@ import {store} from '../store'
 export default{
     data(){
         return{
-            store
+            store,
+            localSearch: '',
+        }
+    }, 
+
+    methods:{
+        setSearch(){
+            this.store.searchMovie = this.localSearch 
         }
     }
 }
@@ -11,7 +18,13 @@ export default{
 
 <template>
     <header>
-        <input class="search-bar" type="text" v-model="store.searchMovie">
+        <div class="logo">
+            <img src="/logo.png" alt="">
+        </div>
+        <div>
+            <input class="search-bar" type="text" @keyup.enter="setSearch" v-model="localSearch" placeholder="Cerca...">
+            <button class="button" @click="setSearch">Invio</button>
+        </div>
     </header>
 </template>
 
@@ -20,9 +33,22 @@ export default{
         padding: 10px;
         background-color: black;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-        .search-bar{
-            padding: 10px;
+    .search-bar{
+        padding: 10px;
+    }
+
+    .button{
+        padding: 10px;
+        background-color: white;
+    }
+    .logo {
+        img{
+            width: 150px;
         }
     }
 </style>

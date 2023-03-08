@@ -2,6 +2,7 @@
 import axios from 'axios'
 import {store} from '../store'
 import Cards from './Cards.vue'
+
 export default{
     components:{
         Cards
@@ -9,34 +10,54 @@ export default{
 
     data(){
         return{
-            store
+            store,
         }
     },
 
     computed:{
-        movie(){
+        search(){
             return this.store.searchMovie
-        }
+        },
     },
 
     watch:{
-        movie(newValue, oldValue){
+        search(newValue, oldValue){
             console.log(oldValue, newValue)
             this.fetchCards()
-        }
+        },
     },
 
     methods:{
         fetchCards(){
-            const searchValue = this.movie
+            this.fetchMovies()
+            this.fetchSeries()
+        },
+
+        fetchMovies(){
+            
             axios.get('https://api.themoviedb.org/3/search/movie?api_key=3df3427edaf72e4e9aac84491c75f583', {
                 params:{
-                    query: searchValue
+                    query: this.search,
+                    language: 'it-IT'
                 }
             })
             .then((res) => {
                 this.store.movieCards = res.data.results
                 console.log(this.store.movieCards)
+            })
+        },
+
+        fetchSeries(){
+            
+            axios.get('https://api.themoviedb.org/3/search/tv?api_key=3df3427edaf72e4e9aac84491c75f583', {
+                params:{
+                    query: this.search,
+                    language: 'it-IT'
+                }
+            })
+            .then((res) => {
+                this.store.tv = res.data.results
+                console.log(this.store.tv)
             })
         }
     },
@@ -51,7 +72,8 @@ export default{
     <main>
         <div class="container">
             <ul class="list-card">
-                <Cards v-for="movie in store.movieCards" :card="movie"/>
+                <Cards v-for="el in store.movieCards" :cardMovie="el"/>
+                <Cards v-for="el in store.tv" :cardSeries="el"/>
             </ul>
         </div>
     </main>
