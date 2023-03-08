@@ -1,18 +1,37 @@
 <script>    
+import {store} from '../store'
 export default{
     props:{
-        cardMovie:{
+        card:{
             type: Object
         },
-
-        cardSeries:{
-            type: Object
-        }
     },
 
     data(){
         return{
+            store,
+            stars: [],
+            
+        }
+    },
 
+    methods:{
+        changeRangeVote(){
+            const newValue = parseInt(this.card.vote_average * 0.5) 
+            console.log(newValue)
+            return newValue
+        },
+
+        addStar(){
+            for(let i = 0; i < this.changeRangeVote(); i++){
+                this.stars.push('*')
+            }
+        },
+    },
+
+    computed:{
+        urlImg(){
+            return 'https://image.tmdb.org/t/p/' + 'w342' + this.card.backdrop_path
         }
     }
 }
@@ -20,49 +39,49 @@ export default{
 
 <template>
     <li>
-        <p>{{ cardMovie.title }}</p>
-        <p>{{ cardMovie.original_title }}</p>
+        <img :src="urlImg" alt="">
 
-        <div v-if="cardMovie.original_language === 'en'">
+        <div v-if="card.title == null">
+            <p>{{ card.name }}</p>
+        </div>
+        <div v-else>
+            <p>{{ card.title }}</p>
+        </div>
+        
+
+        <div v-if="card.original_title == null">
+            <p>{{ card.original_name }}</p>
+        </div>
+        <div v-else>
+            <p>{{ card.original_title }}</p>
+        </div>
+        
+
+        <div v-if="card.original_language === 'en'">
             <img src="../assets/gb-eng.png" alt="">
         </div>
-        <div v-else-if="cardMovie.original_language === 'it'">
+        <div v-else-if="card.original_language === 'it'">
             <img src="../assets/it.png" alt="">
         </div>
-        <div v-else-if="cardMovie.original_language === 'de'">
+        <div v-else-if="card.original_language === 'de'">
             <img src="../assets/de.png" alt="">
         </div>
-        <div v-else-if="cardMovie.original_language === 'es'">
+        <div v-else-if="card.original_language === 'es'">
             <img src="../assets/es.png" alt="">
         </div>
         <div v-else>
-            <p>{{ cardMovie.original_language }}</p>
+            <p>{{ card.original_language }}</p>
         </div>
 
-        <p>{{ cardMovie.vote_average }}</p>
-    </li>
 
-    <li>
-        <p>{{ cardSeries.name }}</p>
-        <p>{{ cardSeries.original_name }}</p>
+        <p> {{ changeRangeVote() }} 
+            <i :class="changeRangeVote() === 1" class="fa-solid fa-star"></i> 
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+        </p>
 
-        <div v-if="cardSeries.original_language === 'en'">
-            <img src="../assets/gb-eng.png" alt="">
-        </div>
-        <div v-else-if="cardSeries.original_language === 'it'">
-            <img src="../assets/it.png" alt="">
-        </div>
-        <div v-else-if="cardSeries.original_language === 'de'">
-            <img src="../assets/de.png" alt="">
-        </div>
-        <div v-else-if="cardSeries.original_language === 'es'">
-            <img src="../assets/es.png" alt="">
-        </div>
-        <div v-else>
-            <p>{{ cardSeries.original_language }}</p>
-        </div>
-
-        <p>{{ cardSeries.vote_average }}</p>
     </li>
 
 </template>

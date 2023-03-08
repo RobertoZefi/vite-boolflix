@@ -72,8 +72,8 @@ export default{
     <main>
         <div class="container">
             <ul class="list-card">
-                <Cards v-for="el in store.movieCards" :cardMovie="el"/>
-                <Cards v-for="el in store.tv" :cardSeries="el"/>
+                <Cards v-for="el in store.movieCards" :card="el"/>
+                <Cards v-for="el in store.tv" :card="el"/>
             </ul>
         </div>
     </main>
