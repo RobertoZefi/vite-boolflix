@@ -44,6 +44,8 @@ export default{
             .then((res) => {
                 this.store.movieCards = res.data.results
                 console.log(this.store.movieCards)
+            }).catch(()=>{
+                this.store.movieCards = []
             })
         },
 
@@ -58,6 +60,8 @@ export default{
             .then((res) => {
                 this.store.tv = res.data.results
                 console.log(this.store.tv)
+            }).catch(()=>{
+                this.store.tv = []
             })
         }
     },
@@ -72,8 +76,10 @@ export default{
     <main>
         <div class="container">
             <ul class="list-card">
-                <Cards v-for="el in store.movieCards" :card="el"/>
-                <Cards v-for="el in store.tv" :card="el"/>
+                <h1>Film</h1>
+                <Cards class="card-item" v-for="el in store.movieCards" :card="el"/>
+                <h1>Serie TV</h1>
+                <Cards class="card-item" v-for="el in store.tv" :card="el"/>
             </ul>
         </div>
     </main>
@@ -83,7 +89,10 @@ export default{
 @use '../style/partials/variables.scss';
 .list-card{
     display: flex;
-    gap: 50px;
     flex-wrap: wrap;
+
+    .card-item{
+        flex-basis: calc(100% / 3);
+    }
 }
 </style>
