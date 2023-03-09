@@ -11,7 +11,12 @@ export default{
         return{
             store,
             stars: [],
-            
+            flags: {
+                it: '../assets/it.png',
+                en: '../assets/gb-eng.png',
+                de: '../assets/de.png',
+                es: '../assets/es.png',
+            }
             
         }
     },
@@ -21,12 +26,6 @@ export default{
             const newValue = parseInt(this.card.vote_average * 0.5) 
             console.log(newValue)
             return newValue
-        },
-
-        addStar(){
-            for(let i = 0; i < this.changeRangeVote(); i++){
-                this.stars.push('*')
-            }
         },
     },
 
@@ -43,37 +42,11 @@ export default{
         
             <img :src="urlImg" alt="">
     
-            <div v-if="card.title == null">
-                <p>{{ card.name }}</p>
-            </div>
-            <div v-else>
-                <p>{{ card.title }}</p>
-            </div>
-            
+            <h3>{{ card.title !== undefined ? card.title : card.name }}</h3>
+            <h4>{{ card.original_title !== undefined ? card.original_title : card.original_name }}</h4>       
     
-            <div v-if="card.original_title == null">
-                <p>{{ card.original_name }}</p>
-            </div>
-            <div v-else>
-                <p>{{ card.original_title }}</p>
-            </div>
-            
-    
-            <div v-if="card.original_language === 'en'">
-                <img src="../assets/gb-eng.png" alt="">
-            </div>
-            <div v-else-if="card.original_language === 'it'">
-                <img src="../assets/it.png" alt="">
-            </div>
-            <div v-else-if="card.original_language === 'de'">
-                <img src="../assets/de.png" alt="">
-            </div>
-            <div v-else-if="card.original_language === 'es'">
-                <img src="../assets/es.png" alt="">
-            </div>
-            <div v-else>
-                <p>{{ card.original_language }}</p>
-            </div>
+            <img v-if="flags[card.original_language] !== undefined" :src="flags[card.original_language]" alt="">
+            <p v-else>{{ card.original_language }}</p>
     
     
             <p> {{ changeRangeVote() }} 
