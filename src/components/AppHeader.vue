@@ -20,10 +20,18 @@ export default{
     <header>
         <div class="logo">
             <img src="/logo.png" alt="">
+            <ul class="option">
+                <li>Home</li>
+                <li>Serie TV</li>
+                <li>Film</li>
+                <li>Originali</li>
+                <li>Aggiunti di recente</li>
+                <li>La mia lista</li>
+            </ul>
         </div>
-        <div>
-            <input class="search-bar" type="text" @keyup.enter="setSearch" v-model="localSearch" placeholder="Cerca...">
-            <button class="button" @click="setSearch">Invio</button>
+        <div class="input">
+            <input class="search-bar" type="text" @keyup.enter="setSearch" v-model="localSearch" placeholder="Titoli...">
+            <span class="button" @click="setSearch"><i class="fa-solid fa-magnifying-glass"></i></span>
         </div>
     </header>
 </template>
@@ -40,15 +48,35 @@ export default{
 
     .search-bar{
         padding: 10px;
+        background-color: black;
+        border-color: white;
+        color: white;
     }
 
     .button{
         padding: 10px;
-        background-color: white;
+        color: white;
     }
     .logo {
+
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
         img{
             width: 150px;
         }
+    }
+
+    .option{
+        display: flex;
+        gap: 15px;
+        color: white;
+        font-size: 14px;
+    }
+
+    .input{
+        display: flex;
+        align-items: center;
     }
 </style>

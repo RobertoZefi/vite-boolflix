@@ -74,11 +74,14 @@ export default{
 
 <template>
     <main>
-        <div class="container">
+        <div>
+            <h1 class="title">Film</h1>
             <ul class="list-card">
-                <h1>Film</h1>
                 <Cards class="card-item" v-for="el in store.movieCards" :card="el"/>
-                <h1>Serie TV</h1>
+            </ul>
+
+            <h1 class="title">Serie Tv</h1>
+            <ul class="list-card">
                 <Cards class="card-item" v-for="el in store.tv" :card="el"/>
             </ul>
         </div>
@@ -87,12 +90,24 @@ export default{
 
 <style lang="scss" scoped>
 @use '../style/partials/variables.scss';
+
 .list-card{
     display: flex;
-    flex-wrap: wrap;
-
+    white-space: nowrap;
+    overflow: auto;
+    padding: 0 30px;
+    
     .card-item{
-        flex-basis: calc(100% / 3);
+        width: 500px;
+        position: relative;
     }
+}
+
+.title{
+    padding: 30px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 35px;
+    font-weight: 600;
 }
 </style>
